@@ -3,14 +3,12 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <title>Starter Template - Materialize</title>
+  <title>Lung Cancer Analyzation</title>
     <link rel="shortcut icon" href="/static/favito.png">
 
   <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="../static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="../static/css2/style.css " type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="/static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="/static/css2/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 
 <body>
@@ -48,7 +46,7 @@
 
 <div class="row">
 {#         1) Input Patient's Gender#}
-<form action='/predict' method="POST" class="col s12">
+<form action='/predict' method="POST" class="col s12" novalidate>
         <div class="input-field col s4">
 
    <label for="gender">Gender (Male=0/Female=1) </label>
@@ -294,10 +292,10 @@
 
       <br>
   <div class="row center">
-      <ul class="collapsible expandable" data-collapsoble="expandable">
-    <li>
-      <div class="collapsible-header"><i class="material-icons">filter_drama</i>Lung Cancer Prediction</div>
-      <div class="collapsible-body"><span> {{pred}}</span></div>
+      <ul class="collapsible expandable" data-collapsible="expandable">
+    <li class="{% if pred %}active{% endif %}">
+      <div class="collapsible-header">Lung Cancer Prediction</div>
+      <div class="collapsible-body"><span>{{pred}}</span></div>
     </li>
       </ul>
   </div>
@@ -342,10 +340,9 @@
 
 
   <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="../static/js/materialize.js"></script>
-  <script src="../static/js/init.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/materialize.js"></script>
+  <script src="/static/js/init.js"></script>
   </body>
 </html>
 

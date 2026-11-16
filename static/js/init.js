@@ -1,15 +1,7 @@
-$(document).ready(function(){
-    $('select').formSelect();
-  });
+document.addEventListener('DOMContentLoaded', function () {
+    const selectElems = document.querySelectorAll('select');
+    M.FormSelect.init(selectElems);
 
-  $(document).ready(function(){
-    $('.collapsible').collapsible();
-  });
-
-    let elem = document.querySelector('.collapsible.expandable');
-    let instance = M.Collapsible.init(elem, {accordion: false });
-
-    document.addEventListener('DOMContentLoaded', function() {
-    let elems = document.querySelectorAll('select');
-    let instances = M.FormSelect.init(elems);
-  });
+    const collapsibleElems = document.querySelectorAll('.collapsible.expandable');
+    M.Collapsible.init(collapsibleElems, { accordion: false });
+});
