@@ -24,23 +24,42 @@ def hello_world():
 #        'ALCOHOL CONSUMING', 'COUGHING', 'SHORTNESS OF BREATH',
 #        'SWALLOWING DIFFICULTY', 'CHEST PAIN', 'LUNG_CANCER']
 
+FEATURE_NAMES = [
+    'GENDER', 'AGE', 'SMOKING', 'YELLOW_FINGERS', 'Anxiety',
+    'PEER_PRESSURE', 'CHRONIC DISEASE', 'FATIGUE', 'ALLERGY', 'WHEEZING',
+    'ALCOHOL CONSUMING', 'COUGHING', 'SHORTNESS OF BREATH',
+    'SWALLOWING DIFFICULTY', 'CHEST PAIN'
+]
+
+
 @app.route('/predict', methods=['POST', 'GET'])
 def predict():
     if request.method == 'POST':
-        int_features = [int(x) for x in request.form.values()]
+        missing = [name for name in FEATURE_NAMES if not request.form.get(name, '').strip()]
+        if missing:
+            return render_template(
+                'lung_cancer.html',
+                pred='Please fill in all fields (missing: {}).'.format(', '.join(missing))
+            )
+        try:
+            int_features = [int(request.form[name]) for name in FEATURE_NAMES]
+        except ValueError:
+            return render_template(
+                'lung_cancer.html',
+                pred='Invalid input: please enter valid numbers for all fields.'
+            )
         final = np.reshape(int_features, (1, -1))
-        print(int_features)  # Checking Inputs Successfully Added
-        print(final)  # Reshaping into numpy array for Prediction
+        print(int_features, flush=True)  # Checking Inputs Successfully Added
         prediction = model.predict(final)
-        print(prediction)  # Checking the Prediction Value
-        output = prediction
+        print(prediction, flush=True)  # Checking the Prediction Value
+        output = int(prediction[0])
         if output == 0:
-            return render_template('lung_cancer.html', pred='Person Has Lung Cancer {}'.format(output))
+            return render_template('lung_cancer.html', pred='Person Has Lung Cancer ({})'.format(output))
         else:
-            return render_template('lung_cancer.html', pred='Person Does Not Got Lung Cancer {}'.format(output))
+            return render_template('lung_cancer.html', pred='Person Does Not Have Lung Cancer ({})'.format(output))
     else:
         return render_template('lung_cancer.html')
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, port=8000)
+    app.run(host='127.0.0.1', debug=True, port=8000)
